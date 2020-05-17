@@ -21,11 +21,12 @@
     <div class="box round first grid">
         <h2>Sửa sản phẩm</h2>
         <div class="block">    
-          <?php 
+            <?php 
                     if(isset($updateProduct)){
                         echo $updateProduct;
                     }
-                ?> 
+            ?> 
+            
             <?php
                 $get_product_by_id = $pd->getproductbyId($id);
                      if($get_product_by_id){

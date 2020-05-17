@@ -1,4 +1,8 @@
 <?php
+	require_once "./inc/connectinc.php";
+?>
+
+<?php
 	include "./inc/header.php";
 	// include "./inc/slider.php";
 ?>
@@ -75,14 +79,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 					<h2>CATEGORIES</h2>
 					<ul>
 						<?php
-						$get_category = $ct->show_category_fonend();
+						$get_category = $ct->show_category_frontend();
 							if($get_category){
 								while($result_allcat = $get_category->fetch_assoc()){
 						?>			
 							<li><a href="productbycat.php?catid=<?php echo $result_allcat['catId']?>"><?php echo $result_allcat['catName']?></a></li>
 						<?php
 							}
-						}?>
+						}
+						?>
     				</ul>    	
  			</div>
  		</div>

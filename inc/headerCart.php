@@ -36,27 +36,7 @@
 			    </div>
 
 			  <!-- <div> Vỏ Hàng </div> -->
-				<div class="shopping_cart">
-					<div class="cart">
-						<a href="#" title="View my shopping cart" rel="nofollow">
-							<span class="cart_title">Cart</span>
-							<span class="no_product">
-							
-								<?php
-								$check_cart = $cr->check_cart();
-  									if ($check_cart){
-										$sum = Session::get("sum");
-										$qty = Session::get("qty");
-										echo $sum.' '.'vnđ'.'  || '.'Qty:'.$qty; //$qty bên trang cart.php
-									}else{
-										echo 'Emply';
-									}
-								?>
-							
-							</span>
-						</a>
-					</div>
-			    </div>
+				
 
 		   <div class="login"><a href="login.php">Login</a></div>
 

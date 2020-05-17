@@ -19,7 +19,7 @@ class Brand
 
     public function insert_brand($brandName){
 
-        $brandName = $this->fm->validation($brandName);
+        $brandName = $this->fm->validation($brandName);//
         $brandName = mysqli_real_escape_string($this->db->link, $brandName);
       
             if(empty($brandName)){

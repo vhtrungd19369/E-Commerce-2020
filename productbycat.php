@@ -1,4 +1,6 @@
-
+<?php
+	require_once "./inc/connectinc.php";
+?>
 <?php
 	require_once "./inc/header.php";
 	// require_once "./inc/slider.php";
@@ -12,23 +14,29 @@
     }
     // if($_SERVER['REQUEST_METHOD'] === 'POST'){
 	// 	$catName = $_POST['catName'];
-    //     $updatetCat = $cat->update_caterogy($catName,$id);      
+    //     $updateCat = $cat->update_caterogy($catName,$id);      
 	// }  
 ?>
  <div class="main">
     <div class="content">
-    	<div class="content_top">
-    		<!-- <div class="heading">
-			<?php 
-				// $productbycat = $cat->get_product_by_cat($id)
-				// if($productbycat){
-				// <h3>Category :  echo $result['catName'] </h3>
-				// }
-			?>
-			</div> -->
-    		<div class="clear"></div>
-    	</div>
+	<!-- -------------------------------------------------- -->
+	<?php 
+		$name_cat = $cat->getcatbyId($id);
+		if($name_cat){
+			while($result_name = $name_cat->fetch_assoc()){
+	?>
+		<div class="content_top">
+			<div class="heading">
+				<h3>Category :  <?php echo $result_name['catName'] ?> </h3>
+			</div>
 
+			<div class="clear"></div>
+		</div>
+	<?php
+		}
+	}
+	?>
+	<!-- --------------------------------------------------------------- -->
 		<div class = "section group">
 			<?php
 			$productbycat = $cat->get_product_by_cat($id);
@@ -36,7 +44,7 @@
 				while($result = $productbycat->fetch_assoc()){
 			?>
 				<div class="grid_1_of_4 images_1_of_4">
-					<a><img src="admin/upload/<?php echo $result['image']?>" alt="" /></a>
+					<a><img src="admin/upload/<?php echo $result['image']?>" width="200px" alt="" /></a>
 					<h2><?php echo $result['productName']?> </h2>
 					<p><?php echo $fm->textShorten($result['product_desc'],50);?></p>
 					<p><span class="price"><?php echo $result['price'].' '.'VNĐ'?></span></p>
@@ -44,9 +52,13 @@
 				</div>
 				<?php
 				}
-			}?>
+			}	else
+				{
+				echo 'Category Not Avaiable';
+				}
+			?>
 		</div>
-
+<!-- ------------------------------------------------------------ -->
     </div>
  </div>
  <?php
