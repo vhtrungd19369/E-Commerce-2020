@@ -6,7 +6,7 @@
 
 <?php
 
-    class product{
+    class Product{
         private $db;
         private $fm;
 
@@ -18,21 +18,21 @@
 
         public function insert_product($data,$files){
 
-            $productName = mysqli_real_escape_string($this->db->link, $data['productName']);
-            $brand = mysqli_real_escape_string($this->db->link, $data['brand']);
-            $category = mysqli_real_escape_string($this->db->link, $data['category']);
-            $product_desc = mysqli_real_escape_string($this->db->link, $data['product_desc']);
-            $price = mysqli_real_escape_string($this->db->link, $data['price']);
-            $type = mysqli_real_escape_string($this->db->link, $data['type']);
+            $productName    = mysqli_real_escape_string($this->db->link, $data['productName']);
+            $brand          = mysqli_real_escape_string($this->db->link, $data['brand']);
+            $category       = mysqli_real_escape_string($this->db->link, $data['category']);
+            $product_desc   = mysqli_real_escape_string($this->db->link, $data['product_desc']);
+            $price          = mysqli_real_escape_string($this->db->link, $data['price']);
+            $type           = mysqli_real_escape_string($this->db->link, $data['type']);
 
-            $permited =array('jpg','jpeg','png','gif');
-            $file_name = $_FILES['image']['name'];
-            $file_size = $_FILES['image']['size'];
-            $file_temp = $_FILES['image']['tmp_name'];
+            $permited   =array('jpg','jpeg','png','gif');
+            $file_name  = $_FILES['image']['name'];
+            $file_size  = $_FILES['image']['size'];
+            $file_temp  = $_FILES['image']['tmp_name'];
 
-            $div = explode('.',$file_name);
-            $file_ext = strtolower(end($div));
-            $unique_image = substr(md5(time()),0,10).'.'.$file_ext;
+            $div            = explode('.',$file_name);
+            $file_ext       = strtolower(end($div));
+            $unique_image   = substr(md5(time()),0,10).'.'.$file_ext;
             $uploaded_image = "upload/".$unique_image;
         
                 if($productName=="" || $brand=="" || $category=="" || $product_desc=="" || $price=="" || $type=="" || $file_name=="" ){

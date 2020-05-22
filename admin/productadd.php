@@ -4,7 +4,7 @@
 <?php include '../classes/brand.php';?>
 <?php include '../classes/product.php';?>
 <?php
-	$pd = new product();
+	$pd = new Product();
 	if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])){
     
         $insertProduct = $pd->insert_product($_POST,$_FILES);

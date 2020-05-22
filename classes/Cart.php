@@ -30,16 +30,16 @@ class Cart{
         $price          = $result['price'];
         $image          = $result['image'];
 
-        // $check_query = "SELECT * FROM tbl_cart WHERE productId = '$productId' AND sId = '$sId'";
-        // $get_Pro = $this->db->select($check_query);
-        // if($get_Pro){
-        //     $msg = "<span style=color:red; font-size: 18px;>
-        //                 Product Already Added !
-        //             <span>";
-        //     return $msg;
-        // }
-        // else
-        // {
+        $check_query = "SELECT * FROM tbl_cart WHERE productId = '$productId' AND sId = '$sId'";
+        $get_Pro = $this->db->select($check_query);
+        if($get_Pro){
+            $msg = "<span style=color:red; font-size: 18px;>
+                        Product Already Added !
+                    <span>";
+            return $msg;
+        }
+        else
+        {
 
             $query = 
             "INSERT INTO
@@ -60,7 +60,7 @@ class Cart{
             else{
                 header("Location:404.php");
             }
-        // }
+        }
     }
 
     public function get_product_cart(){
@@ -103,9 +103,15 @@ class Cart{
     public function check_cart(){
         $sId = session_id();
         $query = "SELECT * FROM tbl_cart WHERE sId = '$sId'";
+        $this->db->select($query);
+    }
+    
+    public function del_all_data_cart(){
+        $sId = session_id();
+        $query = "DELETE FROM tbl_cart WHERE sId = '$sId'"; 
         $result = $this->db->select($query);
         return $result;
-    } 
+    }
 
     
 }

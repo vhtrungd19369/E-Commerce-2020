@@ -1,11 +1,7 @@
 <?php
-	require_once "./inc/connectinc.php";
-?>
-<?php
 	require_once "./inc/header.php";
 	// require_once "./inc/slider.php";
-?>
-<?php
+
     $cat = new Category();
 	if(!isset($_GET['catid']) || $_GET['catid']==NULL){
         echo "<script>window.location = '404.php'</script>";
@@ -17,7 +13,8 @@
     //     $updateCat = $cat->update_caterogy($catName,$id);      
 	// }  
 ?>
- <div class="main">
+
+<div class="main">
     <div class="content">
 	<!-- -------------------------------------------------- -->
 	<?php 
@@ -58,9 +55,10 @@
 				}
 			?>
 		</div>
-<!-- ------------------------------------------------------------ -->
+		<!-- ------------------------------------------------------------ -->
     </div>
- </div>
- <?php
+</div>
+
+<?php
 	require_once "./inc/footer.php";
 ?>

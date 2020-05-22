@@ -1,13 +1,9 @@
 <?php
-	require_once "./inc/connectinc.php";
-?>
-
-<?php
 	include "./inc/header.php";
 	// include "./inc/slider.php";
 ?>
 
-<?PHP
+<?php
 	if(!isset($_GET['proid']) || $_GET['proid']==NULL)
 	{
 		echo "<script>window.location = '404.php'</script>";

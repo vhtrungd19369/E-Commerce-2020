@@ -1,8 +1,7 @@
-
 <?php
-	require_once "./inc/connectinc.php";
+	require_once "./inc/header.php";
+	//require_once "./inc/slider.php";
 ?>
-
 <?php
 if(isset($_GET['cr_id']))
 	{
@@ -22,13 +21,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 		
 }
 ?>
-
-<?php
-	require_once "./inc/headerCart.php";
-	// require_once "./inc/slider.php";
-?>
-
-
 <div class="main">
     <div class="content">
     	<div class="cartoption">		
@@ -91,6 +83,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 							?>					
 							
 						</table>
+
 						<?php
 							$check_cart = $cr->check_cart();
   								if ($check_cart){
@@ -119,37 +112,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 									</td>
 								</tr>
 							</table>
-
-							<table style="float:right;text-align:left;" width="40%">
-								<!-- <div> Vỏ Hàng </div> -->
-								<div class="shopping_cart">
-									<div class="cart">
-										<a href="#" title="View my shopping cart" rel="nofollow">
-											<span class="cart_title">Cart</span>
-											<span class="no_product">
-											
-												<?php
-												$check_cart = $cr->check_cart();
-													if ($check_cart){
-														$sum = Session::get("sum");
-														$qty = Session::get("qty");
-														echo $sum.' '.'vnđ'.'  || '.'Qty:'.$qty; //$qty bên trang cart.php
-													}else{
-														echo 'Emply';
-													}
-												?>
-											
-											</span>
-										</a>
-									</div>
-								</div>
-							</table>
-
 						<?php
 						}else{
 							echo 'You cart is Empty ! Please shopping Now . . .';
 						}
 						?>
+						
 					</div>
 					<div class="shopping">
 						<div class="shopleft">
