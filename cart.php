@@ -1,7 +1,11 @@
+
 <?php
+	// require_once "./inc/connectinc.php";
+
 	require_once "./inc/header.php";
-	//require_once "./inc/slider.php";
+	// require_once "./inc/slider.php";
 ?>
+
 <?php
 if(isset($_GET['cr_id']))
 	{
@@ -18,22 +22,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 		$delcart = $cr->Del_product_cart($cartId);
         return $delcart;
 		}
-		
 }
 ?>
+
 <div class="main">
     <div class="content">
-    	<div class="cartoption">		
+    	<div class="cartoption">	
+
 			<div class="cartpage">
 			    	<h2>Your Cart</h2>
-					<?php
-					if(isset($Update_quantity_cart)){
-						echo $Update_quantity_cart;
-					}
-					if(isset($delcart)){
-						echo $delcart;
-					}
-					?>
+						<?php
+						if(isset($Update_quantity_cart)){
+							echo $Update_quantity_cart;
+						}
+						if(isset($delcart)){
+							echo $delcart;
+						}
+						?>
 						<table class="tblone">
 							<tr>
 								<th width="20%">Product Name</th>
@@ -44,18 +49,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 								<th width="10%">Action</th>
 							</tr>
 
-
 							<?php
 							$get_product_cart = $cr->get_product_cart();
-							if($get_product_cart){
+							if($get_product_cart)
+							{
 								$subtotal = 0;
 								$qty = 0;
-								while($result = $get_product_cart->fetch_assoc()){ 
-								?>
-								<tr>
+								while($result = $get_product_cart->fetch_assoc())
+								{ 
+								 ?>
+
+								 <tr>
 									<td><?php echo $result['productName'] ?></td>
 									<td><img src="admin/upload/<?php echo $result['image']?>" alt=""/></td>
 									<td><?php echo $result['price'] ?></td>
+
 									<td>
 										<form action="" method="post">
 											<input type="hidden" name="cartId" value="<?php echo $result['cartId']?>"/>
@@ -63,22 +71,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 											<input type="submit" name="submit" value="Update"/>
 										</form>
 									</td>
+
 									<td>
 										<?php
 											$total = $result['price'] * $result['quantity'];
 											echo $total;
 										?>
 									</td>
+
 									<td><a onclick = "return confirm('Are you sure to dalete <?php echo $result['productName'] ?> ?')"
 											href="?cr_id=<?php echo $result['cartId']?>">
 											Delete
 										</a>
 									</td>
-								</tr>
-								<?php
+								 </tr>
+
+							 	 <?php
 									$subtotal += $total; //giá trên header
 									$qty = $qty + $result['quantity'];// sô lượng trên header
-								}
+							 	}
 							}
 							?>					
 							
@@ -87,7 +98,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 						<?php
 							$check_cart = $cr->check_cart();
   								if ($check_cart){
-						?>
+						 ?>
 							<table style="float:right;text-align:left;" width="40%">
 								<tr>
 									<th>Sub Total : </th>
@@ -112,25 +123,51 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 									</td>
 								</tr>
 							</table>
-						<?php
-						}else{
-							echo 'You cart is Empty ! Please shopping Now . . .';
-						}
-						?>
-						
+
+							<!-- <div> Vỏ Hàng </div> -->
+							<!-- <table style="float:right;text-align:left;" width="40%">
+								<div class="shopping_cart">
+									<div class="cart">
+										<a href="#" title="View my shopping cart" rel="nofollow">
+											<span class="cart_title">Cart</span>
+											<span class="no_product">
+											
+												<?php
+												// $check_cart = $cr->check_cart();
+												// 	if ($check_cart){
+												// 		$sum = Session::get("sum");
+												// 		$qty = Session::get("qty");
+												// 		echo $sum.' '.'vnđ'.'  || '.'Qty:'.$qty; //$qty bên trang cart.php
+												// 	}else{
+												// 		echo 'Emply';
+												// 	}
+												?>
+											
+											</span>
+										</a>
+									</div>
+								</div>
+							</table> -->	<!-- <div> Vỏ Hàng </div> -->
+
+					 <?php
+					}else{
+						echo '<a href="index.php">You cart is Empty ! Please shopping Now . . .</a>';
+					}
+					?>
+				</div>
+
+				<div class="shopping">
+					<div class="shopleft">
+						<a href="index.php"> <img src="images/shop.png" alt="" /></a>
 					</div>
-					<div class="shopping">
-						<div class="shopleft">
-							<a href="index.php"> <img src="images/shop.png" alt="" /></a>
-						</div>
-						<div class="shopright">
-							<a href="login.php"> <img src="images/check.png" alt="" /></a>
-						</div>
+					<div class="shopright">
+						<a href="payment.php"> <img src="images/check.png" alt="" /></a>
 					</div>
-    	</div>  	
-       <div class="clear"></div>
-    </div>
- </div> 
+				</div>
+    		</div>  	
+       		<div class="clear"></div>
+    	</div>
+	</div> 
 <?php
 	require_once "./inc/footer.php";
 ?>

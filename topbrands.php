@@ -1,4 +1,5 @@
 <?php
+	// require_once "./inc/connectinc.php";
 	require_once "./inc/header.php";
 	require_once "./inc/slider.php";
 ?>

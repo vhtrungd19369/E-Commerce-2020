@@ -6,10 +6,10 @@ $filepath = realpath(dirname(__FILE__));
 <?php
 Class Database{
   
-  protected $host   = DB_HOST;
-  protected $user   = DB_USER;
-  protected $pass   = DB_PASS;
-  protected $dbname = DB_NAME;
+   public $host   = DB_HOST;
+   public $user   = DB_USER;
+   public $pass   = DB_PASS;
+   public $dbname = DB_NAME;
  
  
    public $link;

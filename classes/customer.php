@@ -15,6 +15,8 @@ class Customer{
         $this->db = new Database();
         $this->fm = new Format();
     }
+
+   
     public function insert_customers($data){
         $name       = mysqli_real_escape_string($this->db->link, $data['name']);
         $city       = mysqli_real_escape_string($this->db->link, $data['city']);
@@ -61,6 +63,46 @@ class Customer{
         }
     }
 
+    public function update_customers($data, $id)        //from editprofile
+    {
+        $name       = mysqli_real_escape_string($this->db->link, $data['name']);
+        $city       = mysqli_real_escape_string($this->db->link, $data['city']);
+        $zipcode    = mysqli_real_escape_string($this->db->link, $data['zipcode']);
+        $password      = mysqli_real_escape_string($this->db->link, $data['password']);
+        $address    = mysqli_real_escape_string($this->db->link, $data['address']);
+        $phone      = mysqli_real_escape_string($this->db->link, $data['phone']);        
+
+        if($name=="" || $city=="" || $zipcode=="" || $password=="" || $address=="" || $phone==""){
+            $alert = "<span style=color:red; font-size:18px>
+                        Fields must be not empty!
+                    </span>";
+            return $alert;
+        }else
+            { $query ="UPDATE tbl_customer SET 
+                                                name = '$name',
+                                                city = '$city',
+                                                zipcode = '$zipcode',
+                                                password = '$password',
+                                                address = '$address',
+                                                phone='$phone' WHERE id ='$id'";
+                $result = $this->db->insert($query);
+                if($result)
+                {
+                    $alert = "<span style=color:green; font-size: 18px>
+                                Customer Update Successfully
+                            </span>";
+                    return $alert;
+                }
+                else{
+
+                    $alert = "<span style=color:green; font-size: 18px>
+                                Customer Update Not Success
+                            </span>";
+                    return $alert;
+                }
+            }
+    }
+
     public function login_customers($data)
     {
         $email       = mysqli_real_escape_string($this->db->link, $data['email']);
@@ -74,7 +116,7 @@ class Customer{
         }
         else
         {
-            $check_login = "SELECT * FROM tbl_customer WHERE email = '$email' AND password = '$password'";
+            $check_login = "SELECT * FROM tbl_customer WHERE  email = '$email' AND password = '$password'";
             $result_check = $this->db->select($check_login);
             if($result_check)
             {
@@ -94,10 +136,15 @@ class Customer{
         }
     }
 
-    public function show_customers($id){
+    public function show_customers($id)
+    {
         $query = "SELECT * FROM tbl_customer WHERE id = '$id'";
         $result = $this->db->select($query);
         return $result;        
     }
+
+
+
+
 }
-?>
+ ?>

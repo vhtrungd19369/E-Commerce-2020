@@ -1,6 +1,5 @@
 <?php
 	require_once "./inc/header.php";
-//	require_once "./inc/slider.php";
 ?>
 <?php
 	$login_check = Session::get('customer_login');
@@ -104,8 +103,9 @@
 						<!----------------------------------->
 					</tbody>
 				</table> 
-					<div class="search"><div ><input type="submit" name="account" class="grey" value="Create Account"></div></div>
-						<p class="terms">By clicking 'Create Account' you agree to the <a href="#">Terms &amp; Conditions</a>.</p>
+
+				<div class="search"><div ><input type="submit" name="account" class="grey" value="Create Account"></div></div>
+					<p class="terms">By clicking 'Create Account' you agree to the <a href="#">Terms &amp; Conditions</a>.</p>
 				<div class="clear"></div>
 		    </form>
     	</div> 	

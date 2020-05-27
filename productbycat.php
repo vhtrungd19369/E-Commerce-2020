@@ -1,7 +1,10 @@
 <?php
+	// require_once "./inc/connectinc.php";
+
 	require_once "./inc/header.php";
 	// require_once "./inc/slider.php";
-
+?>
+<?php
     $cat = new Category();
 	if(!isset($_GET['catid']) || $_GET['catid']==NULL){
         echo "<script>window.location = '404.php'</script>";
@@ -16,24 +19,24 @@
 
 <div class="main">
     <div class="content">
-	<!-- -------------------------------------------------- -->
-	<?php 
-		$name_cat = $cat->getcatbyId($id);
-		if($name_cat){
-			while($result_name = $name_cat->fetch_assoc()){
-	?>
-		<div class="content_top">
-			<div class="heading">
-				<h3>Category :  <?php echo $result_name['catName'] ?> </h3>
-			</div>
+		<!-- -------------------------------------------------- -->
+		<?php 
+			$name_cat = $cat->getcatbyId($id);
+			if($name_cat){
+				while($result_name = $name_cat->fetch_assoc()){
+		?>
+			<div class="content_top">
+				<div class="heading">
+					<h3>Category :  <?php echo $result_name['catName'] ?> </h3>
+				</div>
 
-			<div class="clear"></div>
-		</div>
-	<?php
+				<div class="clear"></div>
+			</div>
+		<?php
+			}
 		}
-	}
-	?>
-	<!-- --------------------------------------------------------------- -->
+		?>
+		<!-- --------------------------------------------------------------- -->
 		<div class = "section group">
 			<?php
 			$productbycat = $cat->get_product_by_cat($id);
@@ -55,6 +58,7 @@
 				}
 			?>
 		</div>
+
 		<!-- ------------------------------------------------------------ -->
     </div>
 </div>

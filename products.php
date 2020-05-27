@@ -1,6 +1,9 @@
 <?php
+	// require_once "./inc/connectinc.php";
+?>
+<?php
 	require_once "./inc/header.php";
-	//require_once "./inc/slider.php";
+	require_once "./inc/slider.php";
 ?>
  <div class="main">
     <div class="content">

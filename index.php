@@ -1,4 +1,8 @@
 <?php
+	// require_once "./inc/connectinc.php";
+?>
+
+<?php
 	require_once "./inc/header.php";
 	require_once "./inc/slider.php";
 ?>
@@ -71,7 +75,7 @@
 
 				<div class="button">
 					<span><a href="details.php?proid=<?php echo $result['productId'] ?>" class="details" >
-						Details
+					Details
 					</a></span>
 				</div>
 				
