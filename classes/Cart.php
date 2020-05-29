@@ -110,6 +110,12 @@ class Cart{
         $result = $this->db->select($query);
         return $result;
     } 
+    public function check_order($customer_id){
+        $customer_id = session_id();
+        $query = "SELECT * FROM tbl_order WHERE customer_id = '$customer_id'";
+        $result = $this->db->select($query);
+        return $result;
+    } 
 
     public function del_all_data_cart(){
         $sId = session_id();
@@ -151,5 +157,14 @@ class Cart{
         $get_price = $this->db->select($query);
         return $get_price;
     }
+
+    // extend orderdetails.php
+    public function get_product_order($customer_id)
+    {
+        $query = "SELECT * FROM tbl_order WHERE customer_id = '$customer_id'";
+        $get_ordered = $this->db->select($query);
+        return $get_ordered;
+    }
+
 }
 ?>
