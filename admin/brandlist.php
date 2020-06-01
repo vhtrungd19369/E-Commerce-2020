@@ -37,7 +37,7 @@
 							<td><?php echo $i; ?></td>
 							<td><?php echo $result['brandName'] ?></td>
 							<td><a href="brandedit.php?brandid=<?php echo $result['brandId']?>">Edit</a>
-							 || <a onclick = "return confirm('Are you sure to dalete?')" href="?delid=<?php echo $result['brandId']?>">Delete</a></td>
+							 || <a onclick = "return confirm('Are you sure to delete: <?php echo $result['brandName']?> ? ')" href="?delid=<?php echo $result['brandId']?>">Delete</a></td>
 						</tr>
 						<?php
 					}

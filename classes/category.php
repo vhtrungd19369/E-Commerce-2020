@@ -66,15 +66,16 @@ class Category
     
     }
 
-    public function del_category($id){
+    public function del_category($id)
+    {
         $query ="DELETE FROM tbl_category WHERE catId = '$id' ";
         $result = $this->db->delete($query);
         if($result){
-            $alert = "<span class='success'>Category Deleted Successfully</span>";
-            return $alert;
+            $msg = "<span class='success'>Category Deleted Successfully</span>";
+            return $msg;
         }else{
-            $alert = "<span class='error'>Category Deleted Not Success</span>";
-            return $alert;
+            $msg = "<span class='error'>Category Deleted Not Success</span>";
+            return $msg;
         }
     }
 

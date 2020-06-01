@@ -63,6 +63,13 @@ class Customer{
         }
     }
 
+    public function show_customers($id)
+    {
+        $query = "SELECT * FROM tbl_customer WHERE id = '$id'";
+        $result = $this->db->select($query);
+        return $result;        
+    }
+
     public function update_customers($data, $id)        //from editprofile
     {
         $name       = mysqli_real_escape_string($this->db->link, $data['name']);
@@ -136,12 +143,7 @@ class Customer{
         }
     }
 
-    public function show_customers($id)
-    {
-        $query = "SELECT * FROM tbl_customer WHERE id = '$id'";
-        $result = $this->db->select($query);
-        return $result;        
-    }
+   
 
 
 

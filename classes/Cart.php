@@ -34,7 +34,7 @@ class Cart{
         $check_query = "SELECT * FROM tbl_cart WHERE productId = '$productId' AND sId = '$sId'";
         $get_Pro = $this->db->select($check_query);
         if($get_Pro){
-            $msg = "<span style=color:red; font-size: 18px;>
+            $msg = "<span class='success'>
                         Product Already Added !
                     <span>";
             return $msg;
@@ -81,15 +81,14 @@ class Cart{
 
         if($result)
         {
-            $msg = "<span style=color:green; font-size: 18px;>
+            $msg = "<span class='success'>
                         Product Quantity Update Sucessfully
                     </span>";
             return $msg;
         }
-
         else       
         {
-            $msg = "<span style=color:green; font-size: 18px;>
+            $msg = "<span class='error'>
                         Product Quantity Not Sucessfully
                     </span>";
             return $msg;
@@ -151,6 +150,7 @@ class Cart{
         }
     }
 
+    
     public function getAmountPrice($customer_id)
     {
         $query = "SELECT price FROM tbl_order WHERE customer_id = '$customer_id'";
@@ -158,13 +158,94 @@ class Cart{
         return $get_price;
     }
 
-    // extend orderdetails.php
+    //orderdetails
     public function get_product_order($customer_id)
     {
         $query = "SELECT * FROM tbl_order WHERE customer_id = '$customer_id'";
-        $get_ordered = $this->db->select($query);
-        return $get_ordered;
+        $msg = $this->db->select($query);
+        return $msg;
     }
 
+    //inbox
+    public function getAllOrderProduct()
+    {
+        $query = "SELECT * FROM tbl_order Order by date_order";
+        $msg = $this->db->select($query);
+        return $msg;
+    }
+
+    //inbox
+    public function productShifted($id, $time, $price)
+    {
+        $id = mysqli_real_escape_string($this->db->link, $id);
+        $date = mysqli_real_escape_string($this->db->link, $time);
+        $price = mysqli_real_escape_string($this->db->link, $price);
+        $query = "UPDATE tbl_order
+            SET status = '1' 
+            WHERE id = '$id' AND date_order = '$date' AND price = '$price'";
+        $updated_row = $this->db->update($query);
+        
+
+        if($updated_row)
+        {
+            $msg = "<span class='success'>
+            
+                        Update Sucessfully.
+                    </span>";
+            return $msg;
+        }
+        else       
+        {//  style=color:red; font-size: 18px;
+            $msg = "<span class='error'>
+                        Not Update !
+                    </span>";
+            return $msg;
+        }
+    }
+
+    public function delProductShifted($id, $time, $price)
+    {
+        $id = mysqli_real_escape_string($this->db->link, $id);
+        $date = mysqli_real_escape_string($this->db->link, $time);
+        $price = mysqli_real_escape_string($this->db->link, $price);
+        
+        $query ="DELETE FROM tbl_order WHERE id = '$id' AND date_order = '$date' AND price = '$price' ";
+        $deldata = $this->db->delete($query); 
+        if ($deldata) {
+            $msg = "<span class='success'>Data Deleted Successfully</span>";
+                return $msg;
+        } else {
+            $msg = "<span class='error'>Data Not Deleted !</span>";
+                return $msg;
+        }
+    }
+
+    public function productShiftConfirm($id, $time, $price)
+    {
+        $id = mysqli_real_escape_string($this->db->link, $id);
+        $date = mysqli_real_escape_string($this->db->link, $time);
+        $price = mysqli_real_escape_string($this->db->link, $price);
+        $query = "UPDATE tbl_order
+                SET
+                status = '2' 
+                WHERE id = '$id' AND date_order = '$date' AND price = '$price'";
+        $updated_row = $this->db->update($query);
+        
+
+        if($updated_row)
+        {
+            $msg = "<span class='success'>
+                        Update Sucessfully.
+                    </span>";
+            return $msg;
+        }
+        else       
+        {
+            $msg = "<span class='error'>
+                        Not Update !
+                    </span>";
+            return $msg;
+        }
+    }
 }
 ?>

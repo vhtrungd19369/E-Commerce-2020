@@ -72,7 +72,7 @@
 <!-- Exit || Delete -->
 					<td>
 						<a href="productedit.php?productid=<?php echo $result['productId']?>">Edit</a>
-						 || <a onclick = "return confirm('Are you sure to dalete?')" href="?productid=<?php echo $result['productId']?>">Delete</a>
+						 || <a onclick = "return confirm('Are you sure to delete: <?php echo $result['productName']?> ?')" href="?productid=<?php echo $result['productId']?>">Delete</a>
 					</td>
 				</tr>
 			<?php
