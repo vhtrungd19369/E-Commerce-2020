@@ -5,13 +5,10 @@
 ?>
 <?php require_once 'lib/database.php';?>
 <?php require_once 'helpers/format.php';?>
-<?php spl_autoload_register
-	(
-		function($class)
-		{
-			require_once "classes/".$class.".php";
-		}
-	)
+<?php
+spl_autoload_register(
+	function($class){ require_once "classes/".$class.".php"; }
+)
 ?>
 
 <?php

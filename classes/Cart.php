@@ -33,23 +33,17 @@ class Cart{
             // TEST Product Already Added !!!
         $check_query = "SELECT * FROM tbl_cart WHERE productId = '$productId' AND sId = '$sId'";
         $get_Pro = $this->db->select($check_query);
-        if($get_Pro){
-            $msg = "<span class='success'>
-                        Product Already Added !
-                    <span>";
+        if($get_Pro)
+        {
+            $msg = "<span class='error'>  Product Already Added ! </span>";
             return $msg;
         }
         else
         {
-
             $query = "INSERT INTO tbl_cart
-                            (
-                                sId, productId, productName, price, quantity, image
-                            )
+                        (sId, productId, productName, price, quantity, image)
                     VALUES
-                            (
-                                '$sId', '$productId', '$productName', '$price', '$quantity', '$image'
-                            )
+                        ('$sId', '$productId', '$productName', '$price', '$quantity', '$image')
                 ";
             
             $insert_cart = $this->db->insert($query);

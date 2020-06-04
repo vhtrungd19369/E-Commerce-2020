@@ -134,7 +134,7 @@
 
 										<?php } elseif ($result['status']=='0') { ?>
 											<td>
-												N/A
+												Pending
 											</td>
 										<?php } ?> <!--end--Row  ACTION-->
 

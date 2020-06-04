@@ -6,7 +6,7 @@
 
 <?php
 
-    class product{
+    class Product{
         private $db;
         private $fm;
 
@@ -183,9 +183,50 @@
             $result = $this->db->select($query);
             return $result;
         }
-    }
+
+        public function insertCompare($proId, $customer_id)
+        {
+            $Customer_Id    = mysqli_real_escape_string($this->db->link, $customer_id);
+            $Product_Id      = mysqli_real_escape_string($this->db->link, $proId);
+            
+            $cquery  = "SELECT * FROM tbl_compare WHERE customer_id = '$Customer_Id' 
+                                                    AND productId = '$Product_Id'";
+            $check = $this->db->select($cquery);
+            if($check)
+            {
+                $msg = "<span class='error' style=color:red; font-size: 18px>Product Available Compare !</span>";
+                return $msg;
+            }else
+            {
+
+            $query = "SELECT * FROM tbl_product WHERE productId = '$Product_Id'";
+            $result = $this->db->select($query)->fetch_assoc();
+            
+            $Product_Id      = $result['productId'];
+            $productName    = $result['productName'];
+            $price          = $result['price'];
+            $image          = $result['image'];
+            
+            $query_insert ="INSERT INTO tbl_compare(productId, price, image, customer_id, productName)
+                VALUES
+                    ('$Product_Id', '$price', '$image', '$customer_id', '$productName')";
+
+            $inserted_row = $this->db->insert($query_insert);
+            if($inserted_row){
+                $msg = "<span class='success' style=color:green; font-size: 18px >Added Compare Successfully </span>";
+                return $msg;
+            }
+
+            }
+            
+        
+        }
+}
 ?>
 
+
+
+<!-- ++ -->
 <?php
     //    $query = "SELECT tbl_product.productId, tbl_category.catName, tbl_brand.brandName 
             
