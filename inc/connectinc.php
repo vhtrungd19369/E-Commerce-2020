@@ -21,9 +21,25 @@ spl_autoload_register(
 	$product = new product();
 ?>
 
+
+<?php //------------- DEFAULT
+	// if(isset($_GET['customer_id'])){
+	// $delCart = $cr->del_all_data_cart();
+	// 	Session::destroy();
+	// }
+?>
+
 <?php
 	if(isset($_GET['customer_id'])){
-	$delCart = $cr->del_all_data_cart();
+		$delCart		= $cr->del_all_data_cart($customer_id);
+		Session::destroy();
+	}
+?>
+
+<?php
+	if(isset($_GET['customer_id'])){
+		$customer_id	= $_GET['$customer_id'];
+		$delCompare 	= $cr->del_all_compare($customer_id);
 		Session::destroy();
 	}
 ?>

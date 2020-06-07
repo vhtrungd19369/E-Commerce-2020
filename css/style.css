@@ -989,7 +989,14 @@ p.note{
 }
 .add-cart{
 	padding-top:15px;
+	float: left;
+	margin:5px;
 }
+.button-details input[type=submit]{
+	float: left;
+	margin:5px;
+}
+
 .rating{
 	float:left;
 }
@@ -2477,5 +2484,17 @@ p.terms {
 	}
 }
 
+/* .error{
+	color: red;
+	font-size: 18px;
+}
+.success{
+	color: green;
+	font-size: 18px;
+} */
+input.grey{
+	font-size: 19px;
+	background: #fff;
+}
 
 

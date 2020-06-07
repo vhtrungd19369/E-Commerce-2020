@@ -53,14 +53,17 @@
                 }
             }
         
+        public function show_product__MEMORYYYY($on0N){
+            // $query = " SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName
+            // FROM tbl_product INNER JOIN tbl_category 0N tbl_product.catId = tbl_category.catId
+    
+            // INNER JOIN tbl_brand ON tbl_product.brandId = tbl_brand.brandId
+    
+            //  order by tbl_product.productId desc";    
+        }
+
+
         public function show_product(){
-        // $query = " SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName
-        // FROM tbl_product INNER JOIN tbl_category 0N tbl_product.catId = tbl_category.catId
-
-        // INNER JOIN tbl_brand ON tbl_product.brandId = tbl_brand.brandId
-
-        //  order by tbl_product.productId desc";
-        
         $query ="SELECT * FROM tbl_product order by productId desc";
                 $result = $this->db->select($query);
                 return $result;
@@ -109,15 +112,18 @@
                                 image =         '$unique_image',
                                 product_desc =  '$product_desc' WHERE productId = '$id'";
                             $result = $this->db->update($query);
-                            if($result){
-                            $alert = "<span class='success'>Product Updated Successfully</span>";
-                                return $alert;
-                            }else{
-                                $alert = "<span class='error'>Product Updated Not Success</span>";
+                        if($result){
+                        $alert = "<span class='success'  style=color:green; font-size: 18px>
+                                    Product Updated Successfully</span>";
                             return $alert;
-                            }
                         }else{
-        //--KHÔNG ĐỔI ẢNH
+                            $alert = "<span class='error'  style=color:red; font-size: 18px>
+                                        Product Updated Not Success
+                                    </span>";
+                        return $alert;
+                        }
+                        }else{
+                            //--KHÔNG ĐỔI ẢNH
                             $query ="UPDATE tbl_product SET
                                 productName =   '$productName',
                                 brandId =       '$brand',
@@ -126,13 +132,17 @@
                                 price =         '$price',
                                 product_desc =  '$product_desc' WHERE productId = '$id'";
                             $result = $this->db->update($query);
-                            if($result){
-                                $alert = "<span class='success'>Product Updated Successfully</span>";
-                                return $alert;
-                            }else{
-                                    $alert = "<span class='error'>Product Updated Not Success</span>";
-                                return $alert;
-                    }
+                        if($result){
+                            $alert = "<span class='success'  style=color:green; font-size: 18px >
+                                        Product Updated Successfully
+                                    </span>";
+                            return $alert;
+                        }else{
+                                $alert = "<span class='error'  style=color:red; font-size: 18px>
+                                            Product Updated Not Success
+                                        </span>";
+                            return $alert;
+                        }
                 }
             }
         
@@ -142,10 +152,14 @@
             $query ="DELETE FROM tbl_product WHERE productId = '$id' ";
             $result = $this->db->delete($query);
             if($result){
-                $alert = "<span class='success'>Product Deleted Successfully</span>";
+                $alert = "<span class='success' style=color:green; font-size: 18px >
+                            Product Deleted Successfully
+                        </span>";
                 return $alert;
             }else{
-                $alert = "<span class='error'>Product Deleted Not Success</span>";
+                $alert = "<span class='error'>
+                            Product Deleted Not Success
+                        </span>";
                 return $alert;
             }
         }
@@ -194,11 +208,15 @@
             $check = $this->db->select($cquery);
             if($check)
             {
-                $msg = "<span class='error' style=color:red; font-size: 18px>Product Available Compare !</span>";
+                $msg = "<span class='error'>
+                            <a  style=color:red; font-size: 18px href=compare.php>
+                                Product Available Compare !</a>
+                        </span>";
                 return $msg;
             }else
             {
 
+                 // Lay data from tbl_product ra:----> truyen vao tbl_compare.
             $query = "SELECT * FROM tbl_product WHERE productId = '$Product_Id'";
             $result = $this->db->select($query)->fetch_assoc();
             
@@ -207,20 +225,109 @@
             $price          = $result['price'];
             $image          = $result['image'];
             
+            // ------------------> truyen vao tbl_compare.
             $query_insert ="INSERT INTO tbl_compare(productId, price, image, customer_id, productName)
                 VALUES
                     ('$Product_Id', '$price', '$image', '$customer_id', '$productName')";
 
             $inserted_row = $this->db->insert($query_insert);
             if($inserted_row){
-                $msg = "<span class='success' style=color:green; font-size: 18px >Added Compare Successfully </span>";
+                $msg = "<span class='success' >
+                            <a  style=color:green; font-size: 18px href=compare.php>
+                                Added Compare Successfully
+                            </a>
+                        </span>";
                 return $msg;
             }
 
             }
-            
-        
         }
+
+        public function get_compare($customer_id)
+        {
+            $query = "SELECT * FROM tbl_compare WHERE customer_id = '$customer_id' order by id desc";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function Del_tbl_compare($productid, $customer_id)
+        {
+            $query ="DELETE FROM tbl_compare WHERE productid = '$productid' AND customer_id = '$customer_id' ";
+            $result = $this->db->delete($query);
+            if($result){
+                $msg = "<span class='success' style = color:green; font-size: 18px>
+                            Product Deleted Successfully
+                        </span>";
+                return $msg;
+            }
+        }
+
+        // Extend: details.php
+        public function insertWishlist($proId, $customer_id)
+        {
+            $Cust_Id    = mysqli_real_escape_string($this->db->link, $customer_id);
+            $Prod_Id      = mysqli_real_escape_string($this->db->link, $proId);
+            
+            $W_query  = "SELECT * FROM tbl_wishlist WHERE customer_id = '$Cust_Id' AND productId = '$Prod_Id'";
+
+            $check_W = $this->db->select($W_query);
+            if($check_W)
+            {
+                $msg = "<span class='error'>
+                            <a style = color:red; font-size: 18px href=wishlist.php>
+                                Product Available Wishlist !
+                            </a>
+                        </span>";
+                return $msg;
+            }else{
+
+                // Lay data from tbl_product ra:----> truyen vao tbl_wishlist.
+            $query = "SELECT * FROM tbl_product WHERE productId = '$Prod_Id'";
+            $result = $this->db->select($query)->fetch_assoc();
+            
+            $Prodt_Id     = $result['productId'];
+            $ProductName    = $result['productName'];
+            $Price          = $result['price'];
+            $Image          = $result['image'];
+            
+                // ----------------> truyen vao tbl_wishlist.
+            $Wquery_insert ="INSERT INTO tbl_wishlist (productId, price, image, customer_id, productName)
+                VALUES
+                    ('$Prodt_Id', '$Price', '$Image', '$customer_id', '$ProductName')";
+
+            $inserted_row = $this->db->insert($Wquery_insert);
+            if($inserted_row){
+                $msg = "<span class='success' >
+                            <a style = color:green; font-size: 18px href=wishlist.php>
+                                Added Wishlist Successfully
+                            </a>
+                        </span>";
+                return $msg;
+            }
+
+            }
+        }
+
+        // Extend: wishlist.php
+        public function get_wishlist($customer_id)
+        {
+            $query = "SELECT * FROM tbl_wishlist WHERE customer_id = '$customer_id' order by id desc";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function Del_tbl_wishlist($productid, $customer_id)
+        {
+            $query ="DELETE FROM tbl_wishlist WHERE productid = '$productid' AND customer_id = '$customer_id' ";
+            $result = $this->db->delete($query);
+            if($result){
+                $msg = "<span class='success' style = color:green; font-size: 18px>
+                            Product Deleted Successfully
+                        </span>";
+                return $msg;
+            }
+        }
+
 }
 ?>
 
@@ -228,7 +335,7 @@
 
 <!-- ++ -->
 <?php
-    //    $query = "SELECT tbl_product.productId, tbl_category.catName, tbl_brand.brandName 
+    //    $query = "SELECT tbl_product.productId, tbl_category.catName, tbl_brand.brandName
             
     //    FROM ((tbl_product 
     //        INNER JOIN tbl_category ON tbl_product.catId = tbl_category.catId)

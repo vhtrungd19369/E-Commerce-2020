@@ -30,7 +30,7 @@ class adminlogin
             $alert = "User and Pass must be not empty";
             return $alert;
         }else{
-            $query ="SELECT * FROM tk_admin WHERE adminUser = '$adminUser' AND adminPass = '$adminPass' LIMIT 1";
+            $query ="SELECT * FROM tbl_admin WHERE adminUser = '$adminUser' AND adminPass = '$adminPass' LIMIT 1";
             $result = $this->db->select($query);
 
             if($result != false){

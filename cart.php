@@ -1,9 +1,13 @@
 
 <?php
-	// require_once "./inc/connectinc.php";
-
 	require_once "./inc/header.php";
-	// require_once "./inc/slider.php";
+?>
+
+<?php
+	$login_check = Session::get('customer_login');
+	if($login_check == false){
+		header('Location:login.php');
+	}
 ?>
 
 <?php
@@ -18,10 +22,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 	$cartId = $_POST['cartId'];
 	$quantity = $_POST['quantity'];	
 	$Update_quantity_cart = $cr->Update_quantity_Cart($quantity, $cartId);
-	if($quantity == 0){
+	if($quantity == 0)
+	{
 		$delcart = $cr->Del_product_cart($cartId);
         return $delcart;
-		}
+	}
 }
 ?>
 
@@ -95,11 +100,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 							
 						</table>
 
+						<table style="float:right;text-align:left;" width="40%">
 						<?php
 							$check_cart = $cr->check_cart();
   								if ($check_cart){
 						 ?>
-							<table style="float:right;text-align:left;" width="40%">
+							
 								<tr>
 									<th>Sub Total : </th>
 									<td><?php
@@ -122,38 +128,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 										?>
 									</td>
 								</tr>
-							</table>
+						<?php
+						}else{
+							echo '<a href="index.php">You want shopping Now . . .</a>';
+						}
+						?>
+						</table>
 
-							<!-- <div> Vỏ Hàng </div> -->
-							<!-- <table style="float:right;text-align:left;" width="40%">
-								<div class="shopping_cart">
-									<div class="cart">
-										<a href="#" title="View my shopping cart" rel="nofollow">
-											<span class="cart_title">Cart</span>
-											<span class="no_product">
-											
-												<?php
-												// $check_cart = $cr->check_cart();
-												// 	if ($check_cart){
-												// 		$sum = Session::get("sum");
-												// 		$qty = Session::get("qty");
-												// 		echo $sum.' '.'vnđ'.'  || '.'Qty:'.$qty; //$qty bên trang cart.php
-												// 	}else{
-												// 		echo 'Emply';
-												// 	}
-												?>
-											
-											</span>
-										</a>
-									</div>
-								</div>
-							</table> -->	<!-- <div> Vỏ Hàng </div> -->
-
-					 <?php
-					}else{
-						echo '<a href="index.php">You cart is Empty ! Please shopping Now . . .</a>';
-					}
-					?>
 				</div>
 
 				<div class="shopping">

@@ -4,7 +4,7 @@
 	{
 		$customer_id = Session::get('customer_id');
 		$insertOrder = $cr->insertOrder($customer_id);
-		$delCart = $cr->del_all_data_cart();
+		$delCart = $cr->del_all_data_cart($customer_id);
 		header('Location:success.php');
 	}
 ?>

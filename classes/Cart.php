@@ -16,12 +16,56 @@ class Cart{
         $this->fm = new Format();
     }
 
-    public function add_to_cart($quantity, $id)
+    // ---------DEFAULT--------------------
+    // public function add_to_cart($quantity, $id)
+    // {
+    //     $quantity = $this->fm->validation($quantity);
+    //     $quantity = mysqli_real_escape_string($this->db->link, $quantity);
+    //     $productId = mysqli_real_escape_string($this->db->link, $id);
+    //     $sId = session_id();
+
+    //     $query = "SELECT * FROM tbl_product WHERE productId = '$productId'";
+    //     $result = $this->db->select($query)->fetch_assoc();
+
+    //     $productName    = $result['productName'];
+    //     $price          = $result['price'];
+    //     $image          = $result['image'];
+
+    //         // TEST Product Already Added !!!
+    //     $check_query = "SELECT * FROM tbl_cart WHERE productId = '$productId' AND sId = '$sId'";
+    //     $get_Pro = $this->db->select($check_query);
+    //     if($get_Pro)
+    //     {
+    //         $msg = "<span class='error'>  Product Already Added ! </span>";
+    //         return $msg;
+    //     }
+    //     else
+    //     {
+    //         $query = "INSERT INTO tbl_cart
+    //                     (sId, productId, productName, price, quantity, image)
+    //                 VALUES
+    //                     ('$sId', '$productId', '$productName', '$price', '$quantity', '$image')
+    //             ";
+            
+    //         $insert_cart = $this->db->insert($query);
+    //         if($insert_cart){
+    //             header("Location:cart.php");
+    //         }
+    //         else{
+    //             header("Location:404.php");
+    //         }
+    //     }
+    // }
+
+    // public function add_to_cart($customer_id, $quantity, $id)
+    public function add_to_cart($customer_id, $quantity, $id)
     {
         $quantity = $this->fm->validation($quantity);
+        
+        $customer_id = mysqli_real_escape_string($this->db->link, $customer_id);
         $quantity = mysqli_real_escape_string($this->db->link, $quantity);
         $productId = mysqli_real_escape_string($this->db->link, $id);
-        $sId = session_id();
+        // $sId = session_id();  Tạm thời ko dùng Session (Nếu dùng nhớ thêm 'sId'  '$sId'  ở lệnh INSERT) 
 
         $query = "SELECT * FROM tbl_product WHERE productId = '$productId'";
         $result = $this->db->select($query)->fetch_assoc();
@@ -31,19 +75,21 @@ class Cart{
         $image          = $result['image'];
 
             // TEST Product Already Added !!!
-        $check_query = "SELECT * FROM tbl_cart WHERE productId = '$productId' AND sId = '$sId'";
+        $check_query = "SELECT * FROM tbl_cart WHERE productId = '$productId' AND customer_id = '$customer_id'";
         $get_Pro = $this->db->select($check_query);
         if($get_Pro)
         {
-            $msg = "<span class='error'>  Product Already Added ! </span>";
+            $msg = "<span class='error'>
+                        <a href=cart.php>Product Already Added !</a>
+                    </span>";
             return $msg;
         }
         else
         {
             $query = "INSERT INTO tbl_cart
-                        (sId, productId, productName, price, quantity, image)
+                        ( productId, productName, price, quantity, image, customer_id)  
                     VALUES
-                        ('$sId', '$productId', '$productName', '$price', '$quantity', '$image')
+                        ( '$productId', '$productName', '$price', '$quantity', '$image', '$customer_id')  
                 ";
             
             $insert_cart = $this->db->insert($query);
@@ -56,12 +102,45 @@ class Cart{
         }
     }
 
+    // DEFAULT----------------
+    // public function get_product_cart()
+    // {
+    //     $sId = session_id();
+    //     $query = "SELECT * FROM tbl_cart WHERE sId = '$sId'";
+    //     $result = $this->db->select($query);
+    //     return $result;
+    // }
+
     public function get_product_cart()
     {
+        $customer_id = Session::get('customer_id');
         $sId = session_id();
-        $query = "SELECT * FROM tbl_cart WHERE sId = '$sId'";
-        $result = $this->db->select($query);
-        return $result;
+
+        // XÉT 2 ĐIỀU KIỆN ĐỂ LẤY RA
+
+        $queryOne = "SELECT * FROM tbl_cart WHERE customer_id = '$customer_id'"; 
+        if($queryOne){
+            $result = $this->db->select($queryOne);
+            return $result;
+        }else{
+            $query = "SELECT * FROM tbl_cart WHERE sId = '$sId' AND  customer_id = '$customer_id' ";
+            $result = $this->db->select($query);
+            return $result;
+        }
+    }
+
+    public function get_product_cartP()
+    {
+        $customer_id = Session::get('customer_id');
+        $sId = session_id();
+
+        // XÉT ĐIỀU KIỆN  login
+
+        $query = "SELECT * FROM tbl_cart WHERE sId = '$sId' customer_id = '$customer_id'"; 
+        if($query){
+            $result = $this->db->select($query);
+            return $result;
+        }
     }
 
     public function Update_quantity_Cart($quantity, $cartId)
@@ -110,9 +189,19 @@ class Cart{
         return $result;
     } 
 
-    public function del_all_data_cart(){
+    // Extend: Success.php
+    public function del_all_data_cart($customer_id){
+        // $sId = session_id();
+        $customer_id = Session::get('customer_id');
+        $query = "DELETE FROM tbl_cart WHERE customer_id = $customer_id"; 
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    // Extend: Compare.php
+    public function del_all_data_compare($customer_id){
         $sId = session_id();
-        $query = "DELETE FROM tbl_cart WHERE sId = '$sId'"; 
+        $query = "DELETE FROM tbl_compare WHERE customer_id = '$customer_id'"; 
         $result = $this->db->select($query);
         return $result;
     }

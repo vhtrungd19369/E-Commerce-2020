@@ -41,13 +41,11 @@
 				    </form>
 			    </div>
 
-			  	<!--  Vỏ Hàng -->
-				<div class="shopping_cart">
+				<div class="shopping_cart">	  	<!--  Vỏ Hàng -->
 					<div class="cart">
 						<a  href="cart.php" title="View my shopping cart" rel="nofollow">
 							<span class="cart_title">Cart</span>
 							<span class="no_product">
-  								<!-- xu li box -->
 								<?php
 								$check_cart = $cr->check_cart();
   									if ($check_cart){
@@ -58,15 +56,12 @@
 										echo 'Emply';
 									}
 								?>
-								<!-- END- xu li box-->
 							</span>
 						</a>
 					</div>
-			    </div>
-				<!--  END - Vỏ Hàng -->
+			    </div><!--  END - Vỏ Hàng -->
 			
-				<div class="login">
-				
+				<div class="login">				
 					<!-- <a href="login.php">Login</a> -->
 					<?php
 						$login_check = Session::get('customer_login');
@@ -124,7 +119,22 @@
 				echo '<li><a href="profile.php">Profile</a></li>';
 			}
 			?>
-				<li><a href="compare.php">Compare</a> </li>
+
+			<?php
+				$login_checkCpare = Session::get('customer_login');
+				if($login_checkCpare){
+					echo '<li><a href="compare.php">Compare</a> </li>';
+				}
+			?>
+
+			<?php
+				$login_checkCpare = Session::get('customer_login');
+				if($login_checkCpare){
+					echo '<li><a href="wishlist.php">Wishlist</a> </li>';
+				}
+			?>
+
+				<!-- <li><a href="compare.php">Compare</a> </li> -->
 				<li><a href="contact.php">Contact</a> </li>
 			<div class="clear"></div>
 		</ul>

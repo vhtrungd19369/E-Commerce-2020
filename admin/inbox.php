@@ -44,7 +44,7 @@ $filepath = realpath(dirname(__FILE__));
 								<th>Product Name</th>
 								<th>Quantity</th>
 								<th>Price</th>
-								<th>Cust. ID</th>
+								<th>Customer ID</th>
 								<th>Address</th>
 								<th>Action</th>
 							</tr>
@@ -89,7 +89,7 @@ $filepath = realpath(dirname(__FILE__));
 									
 									<td><!--Row  ADDRESS-->
 										<a href="customer.php?customerid=<?php echo $result['customer_id'] ?>
-											">View Address
+											">View
 										</a>
 									</td><!--::::End--Row = 7 Frist ::::::::-->
 
