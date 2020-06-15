@@ -15,7 +15,6 @@ class Customer{
         $this->db = new Database();
         $this->fm = new Format();
     }
-
    
     public function insert_customers($data){
         $name       = mysqli_real_escape_string($this->db->link, $data['name']);
@@ -61,6 +60,45 @@ class Customer{
                 }
             }
         }
+    }
+
+    public function insert_Comment()
+    {
+        $Pro_Id = $_POST['product_id_comment'];
+        $Name = $_POST['commentator'];
+        $CMT = $_POST['comment'];
+        
+        if($Name == '' || $CMT == ''){
+            $msg = "<span style=color:red; font-size:18px>
+                        Your name or comment be not empty !
+                    </span>";
+        }
+        else
+        {   $query =
+                " INSERT INTO tbl_comment 
+                    (product_id, cmt_Name, comment)
+                    VALUES
+                    ('$Pro_Id','$Name','$CMT')
+                "
+            ;
+            $result = $this->db->insert($query);
+            if($result)
+            {
+                $msg = "<span style=color:green; font-size: 18px>
+                       Submit comment Successfully.
+                    </span>";
+                return $msg;
+            }
+            else
+            {
+                $msg = "<span style=color:green; font-size: 18px>
+                       Not comment Success !.
+                    </span>";
+                return $msg;
+            }
+        }
+
+
     }
 
     public function show_customers($id)
@@ -142,11 +180,6 @@ class Customer{
             } 
         }
     }
-
-   
-
-
-
 
 }
  ?>

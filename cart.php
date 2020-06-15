@@ -65,11 +65,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 								 ?>
 
 								 <tr>
-									<td><?php echo $result['productName'] ?></td>
-									<td><img src="admin/upload/<?php echo $result['image']?>" alt=""/></td>
-									<td><?php echo $result['price'] ?></td>
+									<td height=”100px″><?php echo $result['productName'] ?></td>
+									<td height=”100px″><img src="admin/upload/<?php echo $result['image']?>" alt="" height=”100″ width=”100″ /></td>
+									<td height=”100px″><?php echo $result['price'] ?></td>
 
-									<td>
+									<td height=”100px″>
 										<form action="" method="post">
 											<input type="hidden" name="cartId" value="<?php echo $result['cartId']?>"/>
 											<input type="number" name="quantity" min = "0" value="<?php echo $result['quantity'];?>"/>
@@ -77,14 +77,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
 										</form>
 									</td>
 
-									<td>
+									<td height=”100px″>
 										<?php
 											$total = $result['price'] * $result['quantity'];
 											echo $total;
 										?>
 									</td>
 
-									<td><a onclick = "return confirm('Are you sure to dalete <?php echo $result['productName'] ?> ?')"
+									<td height=”100px″><a onclick = "return confirm('Are you sure to dalete <?php echo $result['productName'] ?> ?')"
 											href="?cr_id=<?php echo $result['cartId']?>">
 											Delete
 										</a>

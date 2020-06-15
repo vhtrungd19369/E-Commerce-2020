@@ -44,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wishlist']))
 	$insertWishlist = $product->insertWishlist($proId, $customer_id);	//from:product.php
 }
 
+// <!-- COMMENT -->
+if(isset($_POST['submit_comment']))
+{	
+	$insertCmt = $cs->insert_Comment();	
+};
 ?>
 
 <div class="main">
@@ -154,24 +159,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wishlist']))
 				}
 			} ?>
 			</div>
-
-			<div class="rightsidebar span_3_of_1">
-					<h2>CATEGORIES</h2>
-					<ul>
-						<?php
-						$get_category = $ct->show_category_frontend();
-							if($get_category){
-								while($result_allcat = $get_category->fetch_assoc()){
-						?>			
-							<li><a href="productbycat.php?catid=<?php echo $result_allcat['catId']?>"><?php echo $result_allcat['catName']?></a></li>
-						<?php
-							}
-						}
-						?>
-    				</ul>    	
- 			</div>
  		</div>
+
+		 <div class="rightsidebar span_3_of_1">
+			<h2>CATEGORIES</h2>
+			<ul>
+				<?php
+				$get_category = $ct->show_category_frontend();
+					if($get_category){
+						while($result_allcat = $get_category->fetch_assoc()){
+				?>			
+					<li><a href="productbycat.php?catid=<?php echo $result_allcat['catId']?>"><?php echo $result_allcat['catName']?></a></li>
+				<?php
+					}
+				}
+				?>
+			</ul>    	
+ 		</div>
+
  	</div>
+
+		<!-- use bostrast -->
+		<div class="comment">
+			<div class="row">
+
+			<div class="col-md-8">
+			<h5>CUSTOMER REVIEWS</h5>
+			<span>
+				<?php
+					if(isset($insertCmt))
+					{
+						echo $insertCmt;
+					}
+				?>									
+			</span>	
+
+			<form action="" method="POST">
+				<p>
+					<input type="hidden" value="<?php echo $id ?>" name="product_id_comment">
+				</p>
+				<p>
+					<input class="form-control" type="text" placeholder="Your Name" name="commentator">
+				</p>
+				<p>
+					<textarea rows="5" style="resize: none;" class="form-control" placeholder="Comment..." name="comment"></textarea>
+				</p>
+				<p>
+					<input class="btn btn-succuss" name="submit_comment" type="submit" value="Submit">
+				</p>
+			</form>
+
+			</div>
+		</div>
+
+	</div>
+	
 </div>
 <?php
 	include "./inc/footer.php";

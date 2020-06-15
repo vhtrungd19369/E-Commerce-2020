@@ -16,7 +16,16 @@
             $this->fm = new Format();
         }
 
-        public function insert_product($data,$files){
+        public function search_product($keyword)    //from: search.php
+        {
+            $keyword = $this->fm->validation($keyword);
+            $query ="SELECT * FROM tbl_product WHERE productName LIKE '%$keyword%' ";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function insert_product($data,$files)
+        {
 
             $productName = mysqli_real_escape_string($this->db->link, $data['productName']);
             $brand = mysqli_real_escape_string($this->db->link, $data['brand']);
@@ -164,29 +173,44 @@
             }
         }
 
-        //get_Admin
+    //get_Admin
         public function getproductbyId($id){
             $query ="SELECT * FROM tbl_product WHERE productId = '$id' ";
                 $result = $this->db->select($query);
                 return $result;
         }
 
-        //get_User
-        //=====feathered====
+    //get_User    //=====feathered====
         public function getproduct_feathered(){
             $query = "SELECT * FROM tbl_product WHERE type = '1'";
             $result = $this->db->select($query);
             return $result;
         }
 
-        //====New pd====
-        public function getproduct_new(){
-            $query = "SELECT * FROM tbl_product order by productId desc LIMIT 4";       //asc # order by
+    //====New pd====>index.php
+        public function  getproduct_new()
+        {
+            $ProductNumber = 4;
+            if(!isset($_GET['page'])){
+                $Page = 1;
+            }else{
+                $Page = $_GET['page'];
+            }
+            $IndexNumber = ($Page-1)*$ProductNumber;
+            $query = "SELECT * FROM tbl_product order by productId desc LIMIT $IndexNumber, $ProductNumber";       //asc # order by
+            $result = $this->db->select($query);
+        return $result;
+        }
+
+    //====New pd====>index.php
+        public function get_all_product()
+        {
+            $query = "SELECT * FROM tbl_product";       //asc # order by
             $result = $this->db->select($query);
             return $result;
         }
 
-        //=====Details======
+    //=====Details======
         public function get_details($id)
         {   $query = "SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName 
             
@@ -197,7 +221,7 @@
             $result = $this->db->select($query);
             return $result;
         }
-
+    //=====Details======
         public function insertCompare($proId, $customer_id)
         {
             $Customer_Id    = mysqli_real_escape_string($this->db->link, $customer_id);
@@ -328,12 +352,15 @@
             }
         }
 
+     
+
 }
+
 ?>
 
+<!-- 
 
-
-<!-- ++ -->
+ -->
 <?php
     //    $query = "SELECT tbl_product.productId, tbl_category.catName, tbl_brand.brandName
             
